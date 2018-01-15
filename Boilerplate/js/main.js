@@ -6,6 +6,7 @@
 /**************************************
 MODEL
 **************************************/
+/*
 var Song = Backbone.Model.extend({
 	initialize: function(){
 		console.log("Creata una nuova canzone.");
@@ -13,3 +14,15 @@ var Song = Backbone.Model.extend({
 });
 
 var song = new Song();
+*/
+/**************************************
+ATTRIBUTI DEI MODEL
+**************************************/
+
+var Song = Backbone.Model.extend();
+
+var song = new Song({
+	titolo: "Blue in Green",
+	artista: "Miles Davis",
+	annoPubblicazione: 1959	
+});
