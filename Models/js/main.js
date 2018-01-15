@@ -34,6 +34,7 @@ var song = new Song({
 /**************************************
 VALIDAZIONE DEI MODEL
 **************************************/
+/*
 var Song = Backbone.Model.extend({
 	validate: function(attrs){
 		if(!attrs.titolo) 
@@ -46,3 +47,26 @@ var song = new Song();
 console.log(song.isValid());
 
 console.log(song.validationError);
+*/
+/**************************************
+EREDITARIETA' DEI MODEL
+**************************************/
+var Animale = Backbone.Model.extend({
+	cammina: function(){
+		console.log("Animale che cammina...");
+	}
+});
+
+// figlio
+var Cane = Animale.extend({
+	cammina: function(){
+		// uso funzione ereditata
+		Animale.prototype. cammina.apply(this);
+
+		console.log("Cane che cammina...");
+	}
+});
+
+var cane = new Cane();
+
+cane.cammina();
