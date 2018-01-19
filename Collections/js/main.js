@@ -40,7 +40,7 @@ var songs = new Songs();
 songs.add(new Song({ title: "Song 1", genre: "Jazz", downloads: 110 }), { at: 0 });
 
 // PUSH
-songs.add(new Song({ title: "Song 2", genre: "Jazz", downloads: 90 }));
+songs.push(new Song({ title: "Song 2", genre: "Jazz", downloads: 90 }));
 
 // RECUPERARE DATI DALLA COLLECTION
 // restituisce array delle corrispondenze
@@ -53,3 +53,17 @@ var firstJazzSongs = songs.findWhere({ genre: "Jazz" });
 console.log("Jazz Songs", jazzSongs);
 
 console.log("First Jazz Song", firstJazzSongs);
+
+var filteredSongs = songs.where({ genre: "Jazz", title: "Song 2" });
+console.log("Filtered Songs", filteredSongs);
+
+var topDowloads = songs.filter(function(song){
+	return song.get("downloads") > 100;
+});
+
+console.log("topDowloads", topDowloads);
+
+songs.each(function(song){
+	console.log(song);
+});
+
