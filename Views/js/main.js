@@ -1,3 +1,7 @@
+/*****************************
+VIEW: CREARE CONTENUTO STATICO
+*****************************/
+/*
 var SongView = Backbone.View.extend({
 	tagName: "span",
 	class: "song",
@@ -15,3 +19,65 @@ var SongView = Backbone.View.extend({
 var songView = new SongView();
 
 $('#container').html(songView.render().$el);
+*/
+
+/*****************************
+VIEW: PASSARE DEI VALORI : MODEL
+*****************************/
+/*
+var Song = Backbone.Model.extend();
+
+var SongView = Backbone.View.extend({
+	render: function(){
+		this.$el.html(this.model.get("title"));
+		return this;
+	}
+});
+
+// CREO ISTANZA DI UN MODEL
+var song = new Song({ title: "Blue in Green" })
+
+// istanza view
+var songView = new SongView({el: "#container", model: song});
+
+songView.render();
+*/
+/*****************************
+VIEW: PASSARE DEI VALORI : COLLECTION
+*****************************/
+var Song = Backbone.Model.extend();
+
+var Songs = Backbone.Collection.extend({
+	model: Song
+});
+
+var SongView = Backbone.View.extend({
+	tagName: "li",
+	render: function(){
+		this.$el.html(this.model.get("title"));
+		return this;
+	}
+});
+
+// View Per la Collection
+var SongsView = Backbone.View.extend({
+	
+	render: function(){
+		var self = this;
+		this.model.each(function(song){
+			var songView = new SongView({model: song});
+			self.$el.append(songView.render().$el);
+		});
+	}
+});
+
+// CREO ISTANZA DI UNA COLLECTION
+var songs = new Songs([
+	new Song({title: "Blue in Green"}),
+	new Song({title: "So What"}),
+	new Song({title: "All blues"})
+]);
+
+
+var songsView = new SongsView({ model: songs, el: '#songs' });
+songsView.render();
