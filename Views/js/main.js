@@ -45,6 +45,7 @@ songView.render();
 /*****************************
 VIEW: PASSARE DEI VALORI : COLLECTION
 *****************************/
+/*
 var Song = Backbone.Model.extend();
 
 var Songs = Backbone.Collection.extend({
@@ -81,3 +82,34 @@ var songs = new Songs([
 
 var songsView = new SongsView({ model: songs, el: '#songs' });
 songsView.render();
+*/
+/*****************************
+VIEW: HANDLING DOM EVENTS
+*****************************/
+var Song = Backbone.Model.extend();
+
+var SongView = Backbone.View.extend({
+	events: {
+		"click": "onClick",
+		"click .bookmark": "onClickBookmark"
+	},
+	onClick: function(){
+		console.log("Listen clicked");
+	},
+	onClickBookmark: function(e){
+		e.stopPropagation();
+		console.log("Bookmark clicked");
+	},
+	render: function(){
+		this.$el.html(this.model.get("title") + "<button>Listen</button> <button class='bookmark'>Bookmark</button>");
+		return this;
+	}
+});
+
+// CREO ISTANZA DI UN MODEL
+var song = new Song({ title: "Blue in Green" })
+
+// istanza view
+var songView = new SongView({el: "#container", model: song});
+
+songView.render();
