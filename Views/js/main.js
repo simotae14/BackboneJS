@@ -86,6 +86,7 @@ songsView.render();
 /*****************************
 VIEW: HANDLING DOM EVENTS
 *****************************/
+/*
 var Song = Backbone.Model.extend();
 
 var SongView = Backbone.View.extend({
@@ -102,6 +103,33 @@ var SongView = Backbone.View.extend({
 	},
 	render: function(){
 		this.$el.html(this.model.get("title") + "<button>Listen</button> <button class='bookmark'>Bookmark</button>");
+		return this;
+	}
+});
+
+// CREO ISTANZA DI UN MODEL
+var song = new Song({ title: "Blue in Green" })
+
+// istanza view
+var songView = new SongView({el: "#container", model: song});
+
+songView.render();
+*/
+/*****************************
+VIEW: GESTIRE CAMBIAMENTI MODEL
+*****************************/
+var Song = Backbone.Model.extend({
+	defaults: {
+		ascolti: 0
+	}
+});
+
+var SongView = Backbone.View.extend({
+	initialize: function(){
+		this.model.on("change", this.render, this);
+	},
+	render: function(){
+		this.$el.html(this.model.get("title") + " - Ascoltatori: " + this.model.get("ascolti"));
 		return this;
 	}
 });
