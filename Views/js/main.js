@@ -126,7 +126,10 @@ var Song = Backbone.Model.extend({
 
 var SongView = Backbone.View.extend({
 	initialize: function(){
-		this.model.on("change", this.render, this);
+		this.model.on("change", this.onModelChange, this);
+	},
+	onModelChange: function(){
+		this.$el.addClass"someClass");
 	},
 	render: function(){
 		this.$el.html(this.model.get("title") + " - Ascoltatori: " + this.model.get("ascolti"));
