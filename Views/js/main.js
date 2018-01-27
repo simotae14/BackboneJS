@@ -118,6 +118,7 @@ songView.render();
 /*****************************
 VIEW: GESTIRE CAMBIAMENTI MODEL
 *****************************/
+/*
 var Song = Backbone.Model.extend({
 	defaults: {
 		ascolti: 0
@@ -143,4 +144,86 @@ var song = new Song({ title: "Blue in Green" })
 // istanza view
 var songView = new SongView({el: "#container", model: song});
 
+songView.render();
+*/
+/*****************************
+VIEW: GESTIRE CAMBIAMENTI COLLECTIONS
+*****************************/
+/*
+var Song = Backbone.Model.extend();
+
+var Songs = Backbone.Collection.extend({
+	model: Song
+});
+
+var SongView = Backbone.View.extend({
+	tagName: "li",
+	render: function(){
+		this.$el.html(this.model.get("title"));
+		this.$el.attr("id", this.model.id);
+
+		return this;
+	}
+});
+
+// View Per la Collection
+var SongsView = Backbone.View.extend({
+	tagName: "ul",
+	initialize: function(){
+		this.model.on('add', this.onSongAdded, this);
+		this.model.on('remove', this.onSongRemove, this);
+	},
+	onSongAdded: function(song){
+		var songView = new SongView({model: song});
+		this.$el.append(songView.render().$el);
+	},
+	onSongRemove: function(song){
+		// rimuovo l'elemento con il determinato id
+		//this.$el.find("li#" + song.id).remove();
+		// o il metodo + veloce
+		this.$("li#" + song.id).remove();
+	},
+	render: function(){
+		var self = this;
+		this.model.each(function(song){
+			var songView = new SongView({model: song});
+			self.$el.append(songView.render().$el);
+		});
+	}
+});
+
+// CREO ISTANZA DI UNA COLLECTION
+var songs = new Songs([
+	new Song({id: 1, title: "Blue in Green"}),
+	new Song({id: 2, title: "So What"}),
+	new Song({id: 3, title: "All blues"})
+]);
+
+
+var songsView = new SongsView({ model: songs, el: '#songs' });
+songsView.render();
+*/
+/*****************************
+VIEW: USO DEI TEMPLATE
+*****************************/
+var Song = Backbone.Model.extend();
+
+var SongView = Backbone.View.extend({
+	render: function(){
+		// creo template
+		var template = _.template($('#songTemplate').html());
+		// gli passo il model in json
+		var html = template(this.model.toJSON());
+		// lo attacco al container
+		this.$el.html(html);
+
+		return this;
+	}
+});
+
+// CREO ISTANZA DI UNA COLLECTION
+var song = new Song({ title: "Blue in Green", plays: 1110 });
+
+
+var songView = new SongView({ el: "#container", model: song });
 songView.render();
